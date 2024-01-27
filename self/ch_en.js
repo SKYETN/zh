@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const isSnackbar = snackbarData !== undefined;
   
     const isIncludeEN = (item) => {
-      const key = "/en/";
+      const key = "/zh/";
       return item.includes(key);
     };
   
@@ -26,14 +26,14 @@ document.addEventListener("DOMContentLoaded", function () {
         // 英文 => 中文简体
         translateButtonObject.textContent = msgToSimplifiedChinese;
         // 网址： /en/... => /...
-        let newUrl = currentUrl.replace("/en/", "/");
+        let newUrl = currentUrl.replace("/zh/", "/");
         console.log(`Redirect to ${newUrl}`);
         window.location.href = newUrl;
       } else {
         // 中文简体 => 英文
         translateButtonObject.textContent = msgToEnglish;
         // 网址 /... => /en/...
-        let newUrl = currentUrl.replace(/^(https?:\/\/[^\/]+)(\/)?/, "$1/en/");
+        let newUrl = currentUrl.replace(/^(https?:\/\/[^\/]+)(\/)?/, "$1/zh/");
         console.log(`Redirect to ${newUrl}`);
         window.location.href = newUrl;
       }

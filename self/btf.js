@@ -1,7 +1,7 @@
 (() => {
     // 判断是否为英文
     const isIncludeEN = item => {
-      const key = '/en/'
+      const key = '/zh/'
       return item.includes(key)
     }
   
@@ -25,7 +25,7 @@
     // 修改你的 url
     const selector = nowIncludeEN
       ? document.querySelectorAll('a[href^="https://skyetn.github.io/"]') // 只需要修改这一行就好了，将https://<your-url>替换为你的blog网址。
-      : document.querySelectorAll('a[href^="/en/"]')
+      : document.querySelectorAll('a[href^="/zh/"]')
   
     eventFn(selector, nowIncludeEN)
   })()
