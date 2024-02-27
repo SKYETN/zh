@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="zh-CH" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LLM+部署 | Skye's Notebook/Blog</title><meta name="author" content="天空与海"><meta name="copyright" content="天空与海"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="llama 2大模型其实就在说一句话：这个简单快点来hhhh。看似困难的东西其实简单，但看似简单的东西其实困难。有泡沫但是也有绝对的机遇，相当于是ai学术库在放灌注下流。多一句，如何界定好项目，我个人看来是能改变生产力关系的项目。 基础：transformer diffusion gan 等等 + ai训练的细节（lds之类） 实战：llam案例 重要拓展1：向量检索 deepwalk 移动图 重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM+部署">
+<meta property="og:url" content="https://skyetn.github.io/zh/2024/02/25/idea%20about%20the%20LLM/index.html">
+<meta property="og:site_name" content="Skye&#39;s Notebook&#x2F;Blog">
+<meta property="og:description" content="llama 2大模型其实就在说一句话：这个简单快点来hhhh。看似困难的东西其实简单，但看似简单的东西其实困难。有泡沫但是也有绝对的机遇，相当于是ai学术库在放灌注下流。多一句，如何界定好项目，我个人看来是能改变生产力关系的项目。 基础：transformer diffusion gan 等等 + ai训练的细节（lds之类） 实战：llam案例 重要拓展1：向量检索 deepwalk 移动图 重">
+<meta property="og:locale" content="zh_CH">
+<meta property="og:image" content="https://skyetn.github.io/zh/img/icons.jpg">
+<meta property="article:published_time" content="2024-02-25T21:08:40.030Z">
+<meta property="article:modified_time" content="2024-02-25T22:29:46.532Z">
+<meta property="article:author" content="天空与海">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skyetn.github.io/zh/img/icons.jpg"><link rel="shortcut icon" href="/zh/img/favicon.png"><link rel="canonical" href="https://skyetn.github.io/zh/2024/02/25/idea%20about%20the%20LLM/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/zh/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/zh/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"EN","msgToSimplifiedChinese":"中"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'LLM+部署',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-25 17:29:46'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/zh/img/icons.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/zh/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a><a href="/zh/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/zh/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/zh/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/zh/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部Blog</span></a></div><div class="menus_item"><a class="site-page" href="/zh/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Blog分类</span></a></div><div class="menus_item"><a class="site-page" href="/zh/aboutmecv/"><i class="fa-fw fas fa-heart"></i><span> 关于我(CV)</span></a></div><div class="menus_item"><a class="site-page" href="/zh/link/"><i class="fa-fw fas fa-link"></i><span> 其他链接</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-language"></i><span> 语言</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="https://skyetn.github.io/"><i class="fa-fw fas fa-e"></i><span> English</span></a></li><li><a class="site-page child" href="/zh/"><i class="fa-fw fas fa-c"></i><span> 中文</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/zh/img/bg.jpg')"><nav id="nav"><span id="blog-info"><a href="/zh/" title="Skye's Notebook/Blog"><span class="site-name">Skye's Notebook/Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/zh/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/zh/archives/"><i class="fa-fw fas fa-archive"></i><span> 全部Blog</span></a></div><div class="menus_item"><a class="site-page" href="/zh/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Blog分类</span></a></div><div class="menus_item"><a class="site-page" href="/zh/aboutmecv/"><i class="fa-fw fas fa-heart"></i><span> 关于我(CV)</span></a></div><div class="menus_item"><a class="site-page" href="/zh/link/"><i class="fa-fw fas fa-link"></i><span> 其他链接</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-language"></i><span> 语言</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="https://skyetn.github.io/"><i class="fa-fw fas fa-e"></i><span> English</span></a></li><li><a class="site-page child" href="/zh/"><i class="fa-fw fas fa-c"></i><span> 中文</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">LLM+部署</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-02-25T21:08:40.030Z" title="Created 2024-02-25 16:08:40">2024-02-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-02-25T22:29:46.532Z" title="Updated 2024-02-25 17:29:46">2024-02-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/zh/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%9F%BA%E7%A1%80/">人工智能基础</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="LLM+部署"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="llama-2"><a href="#llama-2" class="headerlink" title="llama 2"></a>llama 2</h3><p>大模型其实就在说一句话：这个简单快点来hhhh。看似困难的东西其实简单，但看似简单的东西其实困难。有泡沫但是也有绝对的机遇，相当于是ai学术库在放灌注下流。多一句，如何界定好项目，我个人看来是能改变生产力关系的项目。</p>
+<p>基础：transformer diffusion gan 等等 + ai训练的细节（lds之类）</p>
+<p>实战：llam案例</p>
+<p>重要拓展1：向量检索 deepwalk 移动图</p>
+<p>重要拓展2：语料库扩充</p>
+<p>重要拓展3：先验模型添加（搜索引擎整合，现有业务整合），因此，为了加强绝对的透明性，可以辅佐togaf</p>
+<p>更重要的部署相关：</p>
+<p>大多数是并行计算，直接问题就是难啊，学得不容易。</p>
+<p>现在认可的是用于边缘计算的加速方案，因为这个东西踩在人工智能未来的路上躲不过。此外对于这种分布式的概念，建议了解无服务计算是否会有新的突破</p>
+<p>基于此，看好CUDA 以及 ggml这样的库（相信投ggml的人，机构本身的投资受大量的因素左右，但某一两个投资人是自己的选择：机构选战场，投资人选公司），onnx这些也许会有发展，因为毕竟对接C++</p>
+<p>实战</p>
+<p>国内外的llm生态位：</p>
+<h3 id="Rust-VS-python"><a href="#Rust-VS-python" class="headerlink" title="Rust VS python"></a>Rust VS python</h3><p>rust作为一个系统编程的语言，在后端开发上都有使用，但个人而言对比下python和rust，我会学习rust但使用不一定。据说rust编译出来的应用体积极小，或许我会因为这个原因去使用。这是一个正在发展的框架的确也在解决未来的刚需，也许吧。我觉得有一个很好的点，ai训练和ai推理，一个要求验证，一个要求性能，所以主流有了python和c++这样的组合，但这样的组合怎么看怎么怪，所有有了各种补丁，转换的加速的（torchscript onnx tensorrt），train作为炼丹师，inference作为程序员，要么框架一体，要么这两段的人就得一体化。也就是炼丹师得有程序员的开发能力，程序员得有算法工程师的推算法能力。</p>
+<p>但我喜欢这句话：“将Python的可用性与C的性能相结合，解锁了AI硬件无与伦比的可编程性和AI模型的可扩展性”，似乎看到知乎上说这是<a href="https://link.zhihu.com/?target=https://www.modular.com/mojo">mojo</a> 的定位。也赞同知乎上看到那个观点：我猜未来AI领域的胜出者一定和这样话语有着相近愿景目标的公司</p>
+<p>此外关于ai的一些观点，我的观点是，我们使用技术去推动人类文明发展与留存，而绝非使其毁灭。计算机和ai是工具，它所承载的业务是商业逻辑是需求。那么这一块就衍生很多了，比如<strong>人类对于生老病死的抵触是一种生物本能，没有什么能与生物本能衍生的业务相提并论</strong>……</p>
+<p>ps 新项目rust，老项目就别打扰了吧运行好就成短时间别再去诈尸了hhhhh</p>
+<h3 id="发现VS发明"><a href="#发现VS发明" class="headerlink" title="发现VS发明"></a>发现VS发明</h3><p>记住，我们称这个领域为生命科学，并且将药物发现称作“发现”，仿佛我们在宇宙中漫步突然发现了新大陆。与此不同，计算机科学和其他今天的主流产业不会用“发现”来形容他们的成就。没有人会说“汽车发现”、“计算机发现”或“软件发现”，我们不会回家对另一半说：“看，亲爱的，我今天发现了这段软件。”我们称之为工程。我们的计算机科学、软件每年都在进步，芯片和基础设施也在不断改善。然而，生命科学的进步却是零星的。</p>
+<h3 id="高维数学分析工具"><a href="#高维数学分析工具" class="headerlink" title="高维数学分析工具"></a>高维数学分析工具</h3><p>复杂系统导论 √</p>
+<p>线性代数与矩阵 √</p>
+<p>概率论与统计 √</p>
+<p>最优化</p>
+<p>拓扑学</p>
+<p>函数分析</p>
+<p>信息论</p>
+<p>泛函分析</p>
+<p>离散数学与图论 √</p>
+<p>多元统计分析</p>
+<p>手算或者手推公式能力：</p>
+<p>扩散模型√</p>
+<p>生成对抗网络 √</p>
+<p>svm等 √</p>
+<h3 id="CDMP-VS-Togaf"><a href="#CDMP-VS-Togaf" class="headerlink" title="CDMP VS Togaf"></a>CDMP VS Togaf</h3><p>这两者本质差不多，但是CDMP更关注于数据建模，有一套完整的模板来进行数据管理的交付。但是对于togaf来说，数据只是其中一环，togaf是企业架构，涉及到的包括战略牵动需求，需求引领开发，开发框架迁移与移植。且togaf的成本非常高。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://skyetn.github.io/zh">天空与海</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://skyetn.github.io/zh/2024/02/25/idea%20about%20the%20LLM/">https://skyetn.github.io/zh/2024/02/25/idea%20about%20the%20LLM/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/zh/img/icons.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/zh/2024/02/25/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB1/" title="论文阅读笔记：Multisite learning of high-dimensional heterogeneous data with applications to opioid use disorder study of 15,000 patients across 5 clinical sites"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">论文阅读笔记：Multisite learning of high-dimensional heterogeneous data with applications to opioid use disorder study of 15,000 patients across 5 clinical sites</div></div></a></div><div class="next-post pull-right"><a href="/zh/2024/01/30/Hello%20World-SDE/" title="软件开发-章节介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">软件开发-章节介绍</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/zh/img/icons.jpg" onerror="this.onerror=null;this.src='/zh/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">天空与海</div><div class="author-info__description">Documenting my learning and Project showcase</div></div><div class="card-info-data site-data is-center"><a href="/zh/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a><a href="/zh/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/zh/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/zh/shiqin.tong@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#llama-2"><span class="toc-number">1.</span> <span class="toc-text">llama 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rust-VS-python"><span class="toc-number">2.</span> <span class="toc-text">Rust VS python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E7%8E%B0VS%E5%8F%91%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">发现VS发明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BB%B4%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7"><span class="toc-number">4.</span> <span class="toc-text">高维数学分析工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CDMP-VS-Togaf"><span class="toc-number">5.</span> <span class="toc-text">CDMP VS Togaf</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/zh/2024/02/25/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB1/" title="论文阅读笔记：Multisite learning of high-dimensional heterogeneous data with applications to opioid use disorder study of 15,000 patients across 5 clinical sites">论文阅读笔记：Multisite learning of high-dimensional heterogeneous data with applications to opioid use disorder study of 15,000 patients across 5 clinical sites</a><time datetime="2024-02-25T22:30:51.383Z" title="Created 2024-02-25 17:30:51">2024-02-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/zh/2024/02/25/idea%20about%20the%20LLM/" title="LLM+部署">LLM+部署</a><time datetime="2024-02-25T21:08:40.030Z" title="Created 2024-02-25 16:08:40">2024-02-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/zh/2024/01/30/Hello%20World-SDE/" title="软件开发-章节介绍">软件开发-章节介绍</a><time datetime="2024-01-30T22:28:41.301Z" title="Created 2024-01-30 17:28:41">2024-01-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/zh/2024/01/30/Hello%20World-QF/" title="量化金融-章节介绍">量化金融-章节介绍</a><time datetime="2024-01-30T22:28:41.297Z" title="Created 2024-01-30 17:28:41">2024-01-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/zh/2024/01/30/Hello%20World-MH/" title="医学（计算智能）-章节介绍">医学（计算智能）-章节介绍</a><time datetime="2024-01-30T22:28:41.293Z" title="Created 2024-01-30 17:28:41">2024-01-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 天空与海</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">中</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/zh/js/utils.js?v=4.12.0"></script><script src="/zh/js/main.js?v=4.12.0"></script><script src="/zh/js/tw_cn.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script data-pjax src="/zh/self/btf.js"></script><script data-pjax src="/zh/self/ch_en.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
